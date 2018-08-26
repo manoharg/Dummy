@@ -1,0 +1,67 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<h1> {{title}}</h1>
+<ng-template  #manohar>
+    <p>manohar</p>
+</ng-template>
+
+<p-table [value]="cars" [columns]="cols" dataKey="year" onRowExpand="expand()" rowExpandMode="single">
+    <ng-template pTemplate="header" let-x>
+        <tr>
+                <th style="width: 3em"></th>
+           <th *ngFor="let y of x">
+               {{y.header}}
+           </th>
+            <!-- <th>{{x.year}}</th> -->
+        </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-car let-index="rowIndex" let-expanded="expanded" let-columns="columns" onRowExpand="expand()">
+            <tr onRowExpand="expand($event)" >
+                <td>
+                    <!-- <a href="#" [pRowToggler]="car" onRowExpand="expand($event)">
+                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                    </a> -->
+                    <a href="#" [pRowToggler]="car"  >
+                      <button pButton type="button"   #myButton [value]="expanded? 'hide':'get'" 
+                    (click)="handleClick(index,myButton.value)" [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw    fa-chevron-circle-right'" ></button>
+                    </a>
+                </td>
+                <td *ngFor="let col of columns">
+                    {{car[col.field]}}
+                </td>
+            </tr>
+      
+        </ng-template>
+        <ng-template pTemplate="rowexpansion"   let-index="rowIndex" let-rowData let-columns="columns" onRowExpand="expand()">
+            <!-- <tr>
+                <td>
+                {{rowData.year}} {{index}}
+                </td>
+                <td>
+                    {{rowData.brand}}
+                </td>
+            </tr> -->
+            <tr>
+                    <td [attr.colspan]="columns.length+1">
+            <p-table [columns]="eheader" [value]="employee" [loading]="loading">
+                
+					<ng-template pTemplate="header" let-columns>
+						<tr>
+							<th *ngFor="let col of columns">
+								{{col.header}}
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-subRowData let-columns="columns">
+						<tr>
+							<td *ngFor="let col of columns">
+								{{subRowData[col.field]}}
+							</td>
+						</tr>
+					</ng-template>
+                </p-table>
+                </td>
+                </tr>
+            </ng-template>
+</p-table>
